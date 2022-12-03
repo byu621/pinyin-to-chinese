@@ -56,6 +56,9 @@ namespace PinyinToChinese
             this.button23 = new System.Windows.Forms.Button();
             this.button24 = new System.Windows.Forms.Button();
             this.button25 = new System.Windows.Forms.Button();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.button26 = new System.Windows.Forms.Button();
+            this.textBox3 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // textBox1
@@ -352,11 +355,41 @@ namespace PinyinToChinese
             this.button25.UseVisualStyleBackColor = true;
             this.button25.Click += new System.EventHandler(this.l5_Click);
             // 
+            // textBox2
+            // 
+            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+            this.textBox2.Location = new System.Drawing.Point(52, 389);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(224, 30);
+            this.textBox2.TabIndex = 29;
+            // 
+            // button26
+            // 
+            this.button26.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+            this.button26.Location = new System.Drawing.Point(126, 339);
+            this.button26.Name = "button26";
+            this.button26.Size = new System.Drawing.Size(75, 34);
+            this.button26.TabIndex = 30;
+            this.button26.Text = "Call";
+            this.button26.UseVisualStyleBackColor = true;
+            this.button26.Click += new System.EventHandler(this.Call_Click);
+            // 
+            // textBox3
+            // 
+            this.textBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+            this.textBox3.Location = new System.Drawing.Point(52, 444);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(224, 30);
+            this.textBox3.TabIndex = 31;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(380, 450);
+            this.ClientSize = new System.Drawing.Size(380, 486);
+            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.button26);
+            this.Controls.Add(this.textBox2);
             this.Controls.Add(this.button25);
             this.Controls.Add(this.button21);
             this.Controls.Add(this.button22);
@@ -420,6 +453,9 @@ namespace PinyinToChinese
         private System.Windows.Forms.Button button23;
         private System.Windows.Forms.Button button24;
         private System.Windows.Forms.Button button25;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Button button26;
+        private System.Windows.Forms.TextBox textBox3;
     }
 }
 

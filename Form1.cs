@@ -4,9 +4,14 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Newtonsoft.Json;
+using Pinyin4net;
+using Pinyin4net.Format;
 
 namespace PinyinToChinese
 {
@@ -30,7 +35,59 @@ namespace PinyinToChinese
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            string text = ((TextBox)sender).Text;
+        }
+        private void Call_Click(object sender, EventArgs e)
+        {
+            TextBox[] textBoxes = new[] { textBox2, textBox3 };
+            string[] array = textBox1.Text.Split(' ');
+            if (array.Length > 2)
+            {
+                return;
+            }
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                string pinyin = array[i];
+                CallApi(pinyin, textBoxes[i]);
+            }
+        }
+
+        private void CallApi(string text, TextBox textBox)
+        {
+            string textWithNoTones = Regex.Replace(text, @"[\d-]", string.Empty);
+
+            textBox.Text = string.Empty;
+            using (var client = new HttpClient())
+            {
+                var endpoint = $"https://www.google.com/inputtools/request?ime=pinyin&ie=utf-8&oe=utf-8&app=translate&num=20&text={textWithNoTones}";
+                var result = client.GetStringAsync(endpoint).Result;
+                var json = JsonConvert.DeserializeObject<dynamic>(result);
+                var chineseTranslations = json[1][0][1];
+
+                foreach (string chineseTranslation in chineseTranslations)
+                {
+                    if (chineseTranslation.Length > 1)
+                    {
+                        continue;
+                    }
+
+                    var chineseCharacter = chineseTranslation[0];
+                    string[] pinyin = PinyinHelper.ToHanyuPinyinStringArray(chineseCharacter);
+
+                    if (pinyin == null)
+                    {
+                        continue;
+                    }
+
+                    foreach (string pinyinAlternative in pinyin)
+                    {
+                        if (pinyinAlternative == text || pinyinAlternative == $"{text}5")
+                        {
+                            textBox.Text += chineseTranslation;
+                        }
+                    }
+                }
+            }
         }
 
         #region buttonClicks
@@ -162,5 +219,6 @@ namespace PinyinToChinese
         }
 
         #endregion
+
     }
 }
